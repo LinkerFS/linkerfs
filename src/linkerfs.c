@@ -30,8 +30,7 @@ static int linkerfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
     return 0;
 }
 
-static int linkerfs_open(const char *path, struct fuse_file_info *fi)
-{
+static int linkerfs_open(const char *path, struct fuse_file_info *fi) {
     if ((fi->flags & O_ACCMODE) != O_RDONLY)
         return -EROFS;
 
@@ -43,8 +42,7 @@ static int linkerfs_read(const char *path, char *buf, size_t size, off_t offset,
     return size;
 }
 
-static int linkerfs_release(const char *path, struct fuse_file_info *fi)
-{
+static int linkerfs_release(const char *path, struct fuse_file_info *fi) {
     (void) path;
     (void) fi;
     return 0;
