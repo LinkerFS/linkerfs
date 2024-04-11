@@ -6,10 +6,13 @@ pkg_check_modules(FUSE REQUIRED IMPORTED_TARGET fuse)
 set(SOURCES
         src/linkerfs.c
         src/io/base.c
+        src/opt_parser.c
 )
 set(HEADERS
+        src/data/mount_config.h
         src/data/part_info.h
         src/io/base.h
+        src/opt_parser.h
 )
 include_directories(fuse)
 add_executable(linkerfs ${HEADERS} ${SOURCES} ${FUSE_INCLUDE_DIRS})

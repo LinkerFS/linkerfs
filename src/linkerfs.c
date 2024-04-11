@@ -14,8 +14,11 @@
 #define FUSE_USE_VERSION 29
 
 #include <fuse.h>
-#include <string.h>
 #include <errno.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "opt_parser.h"
+#include "data/mount_config.h"
 
 static int linkerfs_getattr(const char *path, struct stat *stbuf) {
     int res = 0;
@@ -48,6 +51,15 @@ static int linkerfs_release(const char *path, struct fuse_file_info *fi) {
     return 0;
 }
 
+int check_wrap_dir_valid(const char *path) {
+    struct stat buf;
+    int res = -1;
+    if (path && stat(path, &buf) == 0 && S_IFDIR & buf.st_mode)
+        res = 0;
+    return res;
+}
+
+
 static const struct fuse_operations linkerfs_operations = {
         .getattr = linkerfs_getattr,
         .readdir = linkerfs_readdir,
@@ -56,6 +68,16 @@ static const struct fuse_operations linkerfs_operations = {
         .release = linkerfs_release
 };
 
+static struct linkerfs_mount_config mount_config;
+
 int main(int argc, char *argv[]) {
-    return fuse_main(argc, argv, &linkerfs_operations, NULL);
+
+
+    struct fuse_args args = FUSE_ARGS_INIT(argc, argv);
+    opt_parse(&args, &mount_config);
+    if (check_wrap_dir_valid(mount_config.wrap_dir) != 0) {
+        fprintf(stderr, "wrap dir: %s is invalid !\n", mount_config.wrap_dir);
+        exit(1);
+    }
+    return fuse_main(args.argc, args.argv, &linkerfs_operations, NULL);
 }
