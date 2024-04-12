@@ -11,19 +11,21 @@
   See the file LICENSE for more details.
 */
 
-#ifndef LINKERFS_PART_INFO_H
-#define LINKERFS_PART_INFO_H
+#ifndef LINKERFS_HEADER_INFO_H
+#define LINKERFS_HEADER_INFO_H
 
-#include <stdint.h>
 
-struct part_info {
-    int64_t file_size;
-    int64_t start_offset;
-    int32_t path_offset;
-    uint16_t path_length;
-    uint16_t unused;
+#include <bits/stdint-intn.h>
+#include <bits/stdint-uintn.h>
+
+
+struct header_info {
+    unsigned char magic[16];
+    int64_t size;
+    uint16_t part_num;
+    uint32_t unused;
 };
 
-static const unsigned char part_info_length = sizeof(struct part_info);
+static const unsigned char header_length = sizeof(struct header_info);
 
-#endif //LINKERFS_PART_INFO_H
+#endif //LINKERFS_HEADER_INFO_H

@@ -17,11 +17,31 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "opt_parser.h"
 #include "data/mount_config.h"
+#include "io/base.h"
+#include "io/warp.h"
+
+
+static struct linkerfs_mount_config mount_config;
+
+static char *get_real_path(const char *path) {
+    char *real_path = malloc(strlen(mount_config.wrap_dir) + strlen(path));
+    strcpy(real_path, mount_config.wrap_dir);
+    strcat(real_path, path);
+    return real_path;
+}
 
 static int linkerfs_getattr(const char *path, struct stat *stbuf) {
-    int res = 0;
+    int res;
+    struct header_info header;
+    char *real_path = get_real_path(path);
+    res = fs_getattr(real_path, stbuf);
+    memset(&header, 0, header_length);
+    if (is_wrap_file(real_path, &header))
+        stbuf->st_size = header.size;
+    free(real_path);
     return res;
 }
 
@@ -29,25 +49,41 @@ static int linkerfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
                             off_t offset, struct fuse_file_info *fi) {
     (void) offset;
     (void) fi;
-
-    return 0;
+    int res;
+    char *real_path = get_real_path(path);
+    res = fs_readdir(real_path, buf, filler);
+    free(real_path);
+    return res;
 }
 
 static int linkerfs_open(const char *path, struct fuse_file_info *fi) {
     if ((fi->flags & O_ACCMODE) != O_RDONLY)
         return -EROFS;
-
     return 0;
 }
 
 static int linkerfs_read(const char *path, char *buf, size_t size, off_t offset,
                          struct fuse_file_info *fi) {
-    return size;
+    ssize_t res;
+    struct header_info header;
+    memset(&header, 0, header_length);
+    char *real_path = get_real_path(path);
+
+    if (is_wrap_file(real_path, &header)) {
+        int wrap_fd = open(real_path, O_RDONLY);
+        res = wrap_read(wrap_fd, buf, size, offset, &header);
+        close(wrap_fd);
+    } else
+        res = fs_read(path, buf, size, offset);
+
+    free(real_path);
+    return (int) res;
 }
 
 static int linkerfs_release(const char *path, struct fuse_file_info *fi) {
     (void) path;
     (void) fi;
+    close(fi->fh);
     return 0;
 }
 
@@ -68,7 +104,6 @@ static const struct fuse_operations linkerfs_operations = {
         .release = linkerfs_release
 };
 
-static struct linkerfs_mount_config mount_config;
 
 int main(int argc, char *argv[]) {
 

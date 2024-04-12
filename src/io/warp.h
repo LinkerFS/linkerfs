@@ -11,19 +11,14 @@
   See the file LICENSE for more details.
 */
 
-#ifndef LINKERFS_PART_INFO_H
-#define LINKERFS_PART_INFO_H
+#ifndef LINKERFS_WARP_H
+#define LINKERFS_WARP_H
 
-#include <stdint.h>
+#include <unistd.h>
+#include "data/header_info.h"
 
-struct part_info {
-    int64_t file_size;
-    int64_t start_offset;
-    int32_t path_offset;
-    uint16_t path_length;
-    uint16_t unused;
-};
+int is_wrap_file(const char *path, struct header_info *header);
 
-static const unsigned char part_info_length = sizeof(struct part_info);
+ssize_t wrap_read(int wrap_fd, void *buf, size_t size, off_t offset, struct header_info *header);
 
-#endif //LINKERFS_PART_INFO_H
+#endif //LINKERFS_WARP_H

@@ -14,8 +14,14 @@
 #ifndef LINKERFS_BASE_H
 #define LINKERFS_BASE_H
 
+#include <fuse.h>
 #include <stdio.h>
+#include <bits/struct_stat.h>
 
-ssize_t fs_read(const char *path, char *buf, size_t size, off_t offset);
+ssize_t fs_read(const char *path, void *buf, size_t size, off_t offset);
+
+int fs_readdir(const char *path, void *buf, fuse_fill_dir_t filler);
+
+int fs_getattr(const char *path, struct stat *buf);
 
 #endif //LINKERFS_BASE_H

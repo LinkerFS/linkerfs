@@ -6,6 +6,7 @@ pkg_check_modules(FUSE REQUIRED IMPORTED_TARGET fuse)
 set(SOURCES
         src/linkerfs.c
         src/io/base.c
+        src/io/warp.c
         src/opt_parser.c
 )
 set(HEADERS
@@ -13,8 +14,11 @@ set(HEADERS
         src/data/part_info.h
         src/io/base.h
         src/opt_parser.h
+        src/io/warp.h
+        src/data/header_info.h
 )
 include_directories(fuse)
+include_directories(src)
 add_executable(linkerfs ${HEADERS} ${SOURCES} ${FUSE_INCLUDE_DIRS})
 target_link_libraries(linkerfs PRIVATE PkgConfig::FUSE ${Threads})
 
