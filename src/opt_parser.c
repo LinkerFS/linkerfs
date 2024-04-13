@@ -13,6 +13,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "opt_parser.h"
 
 int check_warp_point_valid(const char *path);
@@ -37,6 +38,15 @@ void opt_parse(struct fuse_args *args, struct linkerfs_mount_config *mount_confi
 
 }
 
+void usage(){
+    fprintf(stderr,
+            "usage: linkerfs wrappoint mountpoint [options]\n\n"
+            "general options:\n"
+            "    -o opt,[opt...]        mount options\n"
+            "    -h   --help            print help\n"
+            "\n");
+}
+
 static int
 opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs) {
     (void) outargs;
@@ -50,7 +60,7 @@ opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs) 
             } else
                 break;
         case LINKERFS_OPT_HELP:
-            //TODO: print help
+            usage();
             exit(0);
         default:
             break;
