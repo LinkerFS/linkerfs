@@ -24,7 +24,7 @@
 static const unsigned char magic_number[8] = {0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x72, 0x46, 0x53};
 
 
-int is_wrap_file(const char *path, struct header_info *header) {
+int is_warp_file(const char *path, struct header_info *header) {
     int res;
     if (!header)
         return 0;
@@ -37,7 +37,7 @@ int is_wrap_file(const char *path, struct header_info *header) {
 }
 
 
-ssize_t wrap_read(const int wrap_fd, void *buf, size_t size, off_t offset, struct header_info *header) {
+ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, struct header_info *header) {
 
     if (!header)
         return 0;
@@ -49,10 +49,10 @@ ssize_t wrap_read(const int wrap_fd, void *buf, size_t size, off_t offset, struc
     size_t left_size = size;
     char part_real_path[4097];
     const struct part_info *part = NULL;
-    if (wrap_fd == -1)
+    if (warp_fd == -1)
         return -errno;
     unsigned char part_info_buf[part_info_length * header->part_num];
-    res = pread(wrap_fd, part_info_buf, part_info_length * header->part_num, 32);
+    res = pread(warp_fd, part_info_buf, part_info_length * header->part_num, 32);
     if (res == -1)
         return -errno;
 
@@ -73,7 +73,7 @@ ssize_t wrap_read(const int wrap_fd, void *buf, size_t size, off_t offset, struc
         while (left_size > 0 && i < header->part_num) {
 
             //read part real path
-            res = pread(wrap_fd, part_real_path, part->path_length, part->path_offset);
+            res = pread(warp_fd, part_real_path, part->path_length, part->path_offset);
             if (res == -1)
                 return -errno;
             part_real_path[res + 1] = '\0';

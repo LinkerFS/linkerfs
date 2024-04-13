@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "opt_parser.h"
 
-int check_wrap_dir_valid(const char *path);
+int check_warp_point_valid(const char *path);
 
 static int opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs);
 
@@ -44,8 +44,8 @@ opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs) 
     struct linkerfs_mount_config *mount_config = (struct linkerfs_mount_config *) data;
     switch (key) {
         case FUSE_OPT_KEY_NONOPT:
-            if (mount_config->wrap_dir == NULL) {
-                mount_config->wrap_dir = arg;
+            if (mount_config->warp_point == NULL) {
+                mount_config->warp_point = arg;
                 return 0;
             } else
                 break;

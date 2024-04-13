@@ -27,8 +27,8 @@
 static struct linkerfs_mount_config mount_config;
 
 static char *get_real_path(const char *path) {
-    char *real_path = malloc(strlen(mount_config.wrap_dir) + strlen(path));
-    strcpy(real_path, mount_config.wrap_dir);
+    char *real_path = malloc(strlen(mount_config.warp_point) + strlen(path));
+    strcpy(real_path, mount_config.warp_point);
     strcat(real_path, path);
     return real_path;
 }
@@ -39,7 +39,7 @@ static int linkerfs_getattr(const char *path, struct stat *stbuf) {
     char *real_path = get_real_path(path);
     res = fs_getattr(real_path, stbuf);
     memset(&header, 0, header_length);
-    if (is_wrap_file(real_path, &header))
+    if (is_warp_file(real_path, &header))
         stbuf->st_size = header.size;
     free(real_path);
     return res;
@@ -69,10 +69,10 @@ static int linkerfs_read(const char *path, char *buf, size_t size, off_t offset,
     memset(&header, 0, header_length);
     char *real_path = get_real_path(path);
 
-    if (is_wrap_file(real_path, &header)) {
-        int wrap_fd = open(real_path, O_RDONLY);
-        res = wrap_read(wrap_fd, buf, size, offset, &header);
-        close(wrap_fd);
+    if (is_warp_file(real_path, &header)) {
+        int warp_fd = open(real_path, O_RDONLY);
+        res = warp_read(warp_fd, buf, size, offset, &header);
+        close(warp_fd);
     } else
         res = fs_read(path, buf, size, offset);
 
@@ -87,7 +87,7 @@ static int linkerfs_release(const char *path, struct fuse_file_info *fi) {
     return 0;
 }
 
-int check_wrap_dir_valid(const char *path) {
+int check_warp_point_valid(const char *path) {
     struct stat buf;
     int res = -1;
     if (path && stat(path, &buf) == 0 && S_IFDIR & buf.st_mode)
@@ -110,8 +110,8 @@ int main(int argc, char *argv[]) {
 
     struct fuse_args args = FUSE_ARGS_INIT(argc, argv);
     opt_parse(&args, &mount_config);
-    if (check_wrap_dir_valid(mount_config.wrap_dir) != 0) {
-        fprintf(stderr, "wrap dir: %s is invalid !\n", mount_config.wrap_dir);
+    if (check_warp_point_valid(mount_config.warp_point) != 0) {
+        fprintf(stderr, "warp point: %s is invalid !\n", mount_config.warp_point);
         exit(1);
     }
     return fuse_main(args.argc, args.argv, &linkerfs_operations, NULL);
