@@ -8,7 +8,7 @@ set(SOURCES
         src/io/base.c
 )
 set(HEADERS
-        src/data/partinfo.h
+        src/data/part_info.h
         src/io/base.h
 )
 include_directories(fuse)
