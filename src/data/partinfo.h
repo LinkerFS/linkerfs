@@ -11,16 +11,16 @@
   See the file LICENSE for more details.
 */
 
-#ifndef LINKERFS_PATHINFO_H
-#define LINKERFS_PATHINFO_H
+#ifndef LINKERFS_PARTINFO_H
+#define LINKERFS_PARTINFO_H
 
 #include <stdint.h>
 
 
-struct PathInfo {
+struct PartInfo {
     uint64_t fileSize;
     uint32_t pathOffset;
     uint16_t pathLength;
 };
 
-#endif //LINKERFS_PATHINFO_H
+#endif //LINKERFS_PARTINFO_H
