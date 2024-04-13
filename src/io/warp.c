@@ -19,9 +19,9 @@
 #include "data/part_info.h"
 
 /*
- *  magic_number: hex "LinkerFS"
+ *  magic_number: hex "0xD1 0xFE LinkerFS 0xB7 0xE3"
  */
-static const unsigned char magic_number[8] = {0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x72, 0x46, 0x53};
+static const unsigned char magic_number[12] = {0xD1, 0xFE, 0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x72, 0x46, 0x53, 0xB7, 0xE3};
 
 
 int is_warp_file(const char *path, struct header_info *header) {
@@ -52,7 +52,7 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, struc
     if (warp_fd == -1)
         return -errno;
     unsigned char part_info_buf[part_info_length * header->part_num];
-    res = pread(warp_fd, part_info_buf, part_info_length * header->part_num, 32);
+    res = pread(warp_fd, part_info_buf, part_info_length * header->part_num, header->part_info_begin_offset);
     if (res == -1)
         return -errno;
 

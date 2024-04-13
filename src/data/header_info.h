@@ -18,11 +18,17 @@
 #include <bits/stdint-intn.h>
 #include <bits/stdint-uintn.h>
 
+struct file_format_version{
+    unsigned char major;
+    unsigned char minor;
+};
 
 struct header_info {
-    unsigned char magic[16];
+    unsigned char magic[12];
+    int32_t part_info_begin_offset;
     int64_t size;
     uint16_t part_num;
+    struct file_format_version fmt_version;
     uint32_t unused;
 };
 
