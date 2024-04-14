@@ -19,12 +19,12 @@
 #include <bits/stdint-uintn.h>
 
 struct file_format_version{
-    unsigned char major;
-    unsigned char minor;
+    uint8_t major;
+    uint8_t minor;
 };
 
 struct header_info {
-    unsigned char magic[12];
+    uint8_t magic[12];
     int32_t part_info_begin_offset;
     int64_t size;
     uint16_t part_num;
