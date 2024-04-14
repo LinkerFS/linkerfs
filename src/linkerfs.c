@@ -40,7 +40,7 @@ static int linkerfs_getattr(const char *path, struct stat *stbuf) {
     res = fs_getattr(real_path, stbuf);
     memset(&header, 0, header_length);
     if (is_warp_file(real_path, &header))
-        stbuf->st_size = header.size;
+        stbuf->st_size = header.warp_size;
     free(real_path);
     return res;
 }

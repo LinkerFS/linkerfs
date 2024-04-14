@@ -45,43 +45,43 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, struc
         return -errno;
     }
     ssize_t res;
-    off_t part_offset = 0;
+    off_t part_read_offset = 0;
     size_t left_size = size;
     char part_real_path[4097];
     const struct part_info *part = NULL;
     if (warp_fd == -1)
         return -errno;
-    unsigned char part_info_buf[part_info_length * header->part_num];
-    res = pread(warp_fd, part_info_buf, part_info_length * header->part_num, header->part_info_begin_offset);
+    unsigned char part_info_buf[part_info_length * header->num_parts];
+    res = pread(warp_fd, part_info_buf, part_info_length * header->num_parts, header->part_info_begin_offset);
     if (res == -1)
         return -errno;
 
-    if (offset < header->size) {
+    if (offset < header->warp_size) {
         int i = 0;
         // find first data which part in
-        while (i < header->part_num) {
+        while (i < header->num_parts) {
             part = (struct part_info *) part_info_buf + i;
-            part_offset += part->file_size;
-            if (part_offset > offset)
+            part_read_offset += part->file_size;
+            if (part_read_offset > offset)
                 break;
             ++i;
         }
         if (!part)
             return -1;
-        //calculate offset of part begin
-        part_offset = part->file_size - (part_offset - offset);
-        while (left_size > 0 && i < header->part_num) {
-
-            //read part real path
+        //compute the starting offset of the part data.
+        part_read_offset = part->file_size - (part_read_offset - offset);
+        while (left_size > 0 && i < header->num_parts) {
+            //get real path of this part
             res = pread(warp_fd, part_real_path, part->path_length, part->path_offset);
             if (res == -1)
                 return -errno;
             part_real_path[res + 1] = '\0';
             //size_has_read = size - left_size
             res = fs_read(part_real_path, buf + size - left_size,
-                          left_size > part->file_size ? part->file_size : left_size, part->start_offset + part_offset);
-            //only first part need add part_offset
-            part_offset = 0;
+                          left_size > part->file_size ? part->file_size : left_size,
+                          part->file_begin_offset + part_read_offset);
+            //only first part need add part_read_offset
+            part_read_offset = 0;
             if (res == -1)
                 return -errno;
             left_size -= res;

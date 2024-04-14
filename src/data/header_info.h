@@ -26,8 +26,8 @@ struct file_format_version{
 struct header_info {
     uint8_t magic[12];
     int32_t part_info_begin_offset;
-    int64_t size;
-    uint16_t part_num;
+    int64_t warp_size;
+    uint16_t num_parts;
     struct file_format_version fmt_version;
     uint32_t unused;
 };

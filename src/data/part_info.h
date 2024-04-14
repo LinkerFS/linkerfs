@@ -18,7 +18,7 @@
 
 struct part_info {
     int64_t file_size;
-    int64_t start_offset;
+    int64_t file_begin_offset;
     int32_t path_offset;
     uint16_t path_length;
     uint16_t unused;
