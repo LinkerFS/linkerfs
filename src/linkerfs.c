@@ -1,5 +1,5 @@
 /*
-  LinkerFS: Filesystem based on FUSE for splitting or unioning streams
+  LinkerFS: a data remapping filesystem
   Copyright (C) 2024  kaedeair <kaedeair@outlook.com>
 
   This program is free software: you can redistribute it and/or modify
