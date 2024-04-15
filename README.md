@@ -47,8 +47,8 @@ Includes the basic information of target mapping. Its length is 32(decimal).
 |  | +0C | 4 | begin offset of parts info in this file |
 |  | +10 | 8 | total size( the sum of each part size) |
 |  | +18 | 2 | the number of parts |
-|  | +1A | 1 | major version |
-|  | +1B | 1 | minor version |
+|  | +1A | 1 | major version(file format) |
+|  | +1B | 1 | minor version(file format) |
 | | +1C | 4 | unused |
 
 #### Parts info:
