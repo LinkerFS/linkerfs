@@ -32,7 +32,7 @@ const struct fuse_opt opts[] = {
 };
 
 
-void opt_parse(struct fuse_args *args, struct linkerfs_mount_config *mount_config) {
+void opt_parse(struct fuse_args *args, LINKERFS_MOUNT_CONFIG *mount_config) {
 
     fuse_opt_parse(args, mount_config, opts, opt_processing);
 
@@ -51,7 +51,7 @@ static int
 opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs) {
     (void) outargs;
 
-    struct linkerfs_mount_config *mount_config = (struct linkerfs_mount_config *) data;
+    LINKERFS_MOUNT_CONFIG *mount_config = (LINKERFS_MOUNT_CONFIG *) data;
     switch (key) {
         case FUSE_OPT_KEY_NONOPT:
             if (mount_config->warp_point == NULL) {

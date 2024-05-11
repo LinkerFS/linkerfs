@@ -24,7 +24,7 @@
 static const unsigned char magic_number[12] = {0xD1, 0xFE, 0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x72, 0x46, 0x53, 0xB7, 0xE3};
 
 
-int is_warp_file(const char *path, struct header_info *header) {
+int is_warp_file(const char *path, LINKERFS_HEADER *header) {
     int res;
     if (!header)
         return 0;
@@ -37,7 +37,7 @@ int is_warp_file(const char *path, struct header_info *header) {
 }
 
 
-ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, struct header_info *header) {
+ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKERFS_HEADER *header) {
 
     if (!header)
         return 0;
@@ -48,7 +48,7 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, struc
     off_t part_read_offset = 0;
     size_t left_size = size;
     char part_real_path[4097];
-    const struct part_info *part = NULL;
+    LINKERFS_PART *part = NULL;
     if (warp_fd == -1)
         return -errno;
     unsigned char part_info_buf[part_info_length * header->num_parts];
@@ -60,7 +60,7 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, struc
         int i = 0;
         // find first data which part in
         while (i < header->num_parts) {
-            part = (struct part_info *) part_info_buf + i;
+            part = (LINKERFS_PART *) part_info_buf + i;
             part_read_offset += part->file_size;
             if (part_read_offset > offset)
                 break;

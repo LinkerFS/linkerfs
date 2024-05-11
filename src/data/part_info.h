@@ -16,14 +16,14 @@
 
 #include <stdint.h>
 
-struct part_info {
+typedef struct part_info {
     int64_t file_size;
     int64_t file_begin_offset;
     int32_t path_offset;
     uint16_t path_length;
     uint16_t unused;
-};
+} LINKERFS_PART;
 
-static const unsigned char part_info_length = sizeof(struct part_info);
+static const unsigned char part_info_length = sizeof(LINKERFS_PART);
 
 #endif //LINKERFS_PART_INFO_H

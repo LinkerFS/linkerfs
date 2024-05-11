@@ -17,8 +17,8 @@
 #include <unistd.h>
 #include "data/header_info.h"
 
-int is_warp_file(const char *path, struct header_info *header);
+int is_warp_file(const char *path, LINKERFS_HEADER *header);
 
-ssize_t warp_read(int warp_fd, void *buf, size_t size, off_t offset, struct header_info *header);
+ssize_t warp_read(int warp_fd, void *buf, size_t size, off_t offset, LINKERFS_HEADER *header);
 
 #endif //LINKERFS_WARP_H

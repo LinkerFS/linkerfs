@@ -18,20 +18,20 @@
 #include <bits/stdint-intn.h>
 #include <bits/stdint-uintn.h>
 
-struct file_format_version{
+typedef struct file_format_version {
     uint8_t major;
     uint8_t minor;
-};
+} LINKERFS_WARP_VERSION;
 
-struct header_info {
+typedef struct header_info {
     uint8_t magic[12];
     int32_t part_info_begin_offset;
     int64_t warp_size;
     uint16_t num_parts;
-    struct file_format_version fmt_version;
+    LINKERFS_WARP_VERSION fmt_version;
     uint32_t unused;
-};
+} LINKERFS_HEADER;
 
-static const unsigned char header_length = sizeof(struct header_info);
+static const unsigned char header_length = sizeof(LINKERFS_HEADER);
 
 #endif //LINKERFS_HEADER_INFO_H

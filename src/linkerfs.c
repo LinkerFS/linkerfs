@@ -24,7 +24,7 @@
 #include "io/warp.h"
 
 
-static struct linkerfs_mount_config mount_config;
+static LINKERFS_MOUNT_CONFIG mount_config;
 
 static char *get_real_path(const char *path) {
     char *real_path = malloc(strlen(mount_config.warp_point) + strlen(path));
@@ -35,7 +35,7 @@ static char *get_real_path(const char *path) {
 
 static int linkerfs_getattr(const char *path, struct stat *stbuf) {
     int res;
-    struct header_info header;
+    LINKERFS_HEADER header;
     char *real_path = get_real_path(path);
     res = fs_getattr(real_path, stbuf);
     memset(&header, 0, header_length);
@@ -65,7 +65,7 @@ static int linkerfs_open(const char *path, struct fuse_file_info *fi) {
 static int linkerfs_read(const char *path, char *buf, size_t size, off_t offset,
                          struct fuse_file_info *fi) {
     ssize_t res;
-    struct header_info header;
+    LINKERFS_HEADER header;
     memset(&header, 0, header_length);
     char *real_path = get_real_path(path);
 
