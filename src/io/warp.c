@@ -65,7 +65,7 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKE
         // find first data which part in
         while (i < header->num_parts) {
             part = (LINKERFS_PART *) part_info_buf + i;
-            part_read_offset += part->file_size;
+            part_read_offset += part->data_size;
             if (part_read_offset > offset)
                 break;
             ++i;
@@ -73,7 +73,7 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKE
         if (!part)
             return -1;
         //compute the starting offset of the part data.
-        part_read_offset = part->file_size - (part_read_offset - offset);
+        part_read_offset = part->data_size - (part_read_offset - offset);
         while (left_size > 0 && i < header->num_parts) {
             //get real path of this part
             res = pread(warp_fd, part_real_path, part->path_length, part->path_offset);
@@ -82,8 +82,8 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKE
             part_real_path[res + 1] = '\0';
             //size_has_read = size - left_size
             res = fs_read(part_real_path, buf + size - left_size,
-                          left_size > part->file_size ? part->file_size : left_size,
-                          part->file_begin_offset + part_read_offset);
+                          left_size > part->data_size ? part->data_size : left_size,
+                          part->data_begin_offset + part_read_offset);
             //only first part need add part_read_offset
             part_read_offset = 0;
             if (res == -1)
