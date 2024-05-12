@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
-project(LinkerFS)
+project(LinkerFS LANGUAGES C)
+set(CMAKE_C_STANDARD 99)
+
 find_package(Threads REQUIRED)
-FIND_PACKAGE(PkgConfig REQUIRED)
+find_package(PkgConfig REQUIRED)
 pkg_check_modules(FUSE REQUIRED IMPORTED_TARGET fuse)
 set(SOURCES
         src/linkerfs.c

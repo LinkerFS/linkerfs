@@ -15,8 +15,7 @@
 #define LINKERFS_HEADER_INFO_H
 
 
-#include <bits/stdint-intn.h>
-#include <bits/stdint-uintn.h>
+#include <stdint.h>
 
 typedef struct file_format_version {
     uint8_t major;
