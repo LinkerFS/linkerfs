@@ -24,6 +24,8 @@ If you are using samba, the option `-o allow_other` is needed.
 
 Operating System:  64-bit Linux (32-bit may also work, but be cautious with size_t and off_t, smaller value may be helpful).
 
+CPU: Little Endian
+
 # How it works
 
 linkerfs creates a read-only file system as mirror of `warp point`. 
