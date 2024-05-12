@@ -26,10 +26,6 @@
 #include "base.h"
 #include "data/part_info.h"
 
-/*
- *  magic_number: hex "0xD1 0xFE LinkerFS 0xB7 0xE3"
- */
-static const unsigned char magic_number[12] = {0xD1, 0xFE, 0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x72, 0x46, 0x53, 0xB7, 0xE3};
 
 
 int is_warp_file(const char *path, LINKERFS_HEADER *header) {
