@@ -82,7 +82,7 @@ static int linkerfs_read(const char *path, char *buf, size_t size, off_t offset,
         res = warp_read(warp_fd, buf, size, offset, &header);
         close(warp_fd);
     } else
-        res = fs_read(path, buf, size, offset);
+        res = fs_read(real_path, buf, size, offset);
 
     free(real_path);
     return (int) res;
