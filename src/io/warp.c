@@ -1,6 +1,6 @@
 /*
  * LinkerFS: a data remapping filesystem
- * Copyright (C) 2024  kaedeair <kaedeair@outlook.com>
+ * Copyright (C) 2024-2025  kaedeair <kaedeair@outlook.com>
  *
  * This file is part of LinkerFS.
  *
@@ -22,9 +22,9 @@
 #include <memory.h>
 #include <errno.h>
 
-#include "warp.h"
-#include "base.h"
-#include "data/part_info.h"
+#include "linkerfs/filesystem/io/warp.h"
+#include "linkerfs/filesystem/io/base.h"
+#include "linkerfs/filesystem/data/part_info.h"
 
 
 int is_warp_file(const char *path, LINKERFS_HEADER *header) {

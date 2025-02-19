@@ -1,6 +1,6 @@
 /*
  * LinkerFS: a data remapping filesystem
- * Copyright (C) 2024  kaedeair <kaedeair@outlook.com>
+ * Copyright (C) 2024-2025  kaedeair <kaedeair@outlook.com>
  *
  * This file is part of LinkerFS.
  *
@@ -19,17 +19,9 @@
  * along with LinkerFS. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LINKERFS_BASE_H
-#define LINKERFS_BASE_H
-
-#include <fuse.h>
-#include <stdio.h>
-#include <bits/struct_stat.h>
-
-ssize_t fs_read(const char *path, void *buf, size_t size, off_t offset);
-
-int fs_readdir(const char *path, void *buf, fuse_fill_dir_t filler);
-
-int fs_getattr(const char *path, struct stat *buf);
-
-#endif //LINKERFS_BASE_H
+#ifndef LINKERFS_MOUNT_CONFIG_H
+#define LINKERFS_MOUNT_CONFIG_H
+typedef struct linkerfs_mount_config {
+    const char *warp_point;
+} LINKERFS_MOUNT_CONFIG;
+#endif //LINKERFS_MOUNT_CONFIG_H

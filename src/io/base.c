@@ -1,6 +1,6 @@
 /*
  * LinkerFS: a data remapping filesystem
- * Copyright (C) 2024  kaedeair <kaedeair@outlook.com>
+ * Copyright (C) 2024-2025  kaedeair <kaedeair@outlook.com>
  *
  * This file is part of LinkerFS.
  *
@@ -19,7 +19,7 @@
  * along with LinkerFS. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "base.h"
+#include "linkerfs/filesystem/io/base.h"
 
 #include <errno.h>
 #include <unistd.h>

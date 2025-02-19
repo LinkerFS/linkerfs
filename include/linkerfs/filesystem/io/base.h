@@ -1,6 +1,6 @@
 /*
  * LinkerFS: a data remapping filesystem
- * Copyright (C) 2024  kaedeair <kaedeair@outlook.com>
+ * Copyright (C) 2024-2025  kaedeair <kaedeair@outlook.com>
  *
  * This file is part of LinkerFS.
  *
@@ -19,31 +19,17 @@
  * along with LinkerFS. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LINKERFS_HEADER_INFO_H
-#define LINKERFS_HEADER_INFO_H
+#ifndef LINKERFS_BASE_H
+#define LINKERFS_BASE_H
 
+#include <fuse.h>
+#include <stdio.h>
+#include <bits/struct_stat.h>
 
-#include <stdint.h>
+ssize_t fs_read(const char *path, void *buf, size_t size, off_t offset);
 
-/*
- *  magic_number: hex "0xD1 0xFE LinkerFS 0xB7 0xE3"
- */
-static const unsigned char magic_number[12] = {0xD1, 0xFE, 0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x72, 0x46, 0x53, 0xB7, 0xE3};
+int fs_readdir(const char *path, void *buf, fuse_fill_dir_t filler);
 
-typedef struct file_format_version {
-    uint8_t major;
-    uint8_t minor;
-} LINKERFS_WARP_VERSION;
+int fs_getattr(const char *path, struct stat *buf);
 
-typedef struct header_info {
-    uint8_t magic[12];
-    int32_t part_info_begin_offset;
-    int64_t warp_size;
-    uint16_t num_parts;
-    LINKERFS_WARP_VERSION fmt_version;
-    uint32_t unused;
-} LINKERFS_HEADER;
-
-static const unsigned char header_length = sizeof(LINKERFS_HEADER);
-
-#endif //LINKERFS_HEADER_INFO_H
+#endif //LINKERFS_BASE_H

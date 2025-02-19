@@ -1,6 +1,6 @@
 /*
  * LinkerFS: a data remapping filesystem
- * Copyright (C) 2024  kaedeair <kaedeair@outlook.com>
+ * Copyright (C) 2024-2025  kaedeair <kaedeair@outlook.com>
  *
  * This file is part of LinkerFS.
  *
@@ -26,10 +26,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "opt_parser.h"
-#include "data/mount_config.h"
-#include "io/base.h"
-#include "io/warp.h"
+#include "linkerfs/filesystem/fuse/opt_parser.h"
+#include "linkerfs/filesystem/data/mount_config.h"
+#include "linkerfs/filesystem/io/base.h"
+#include "linkerfs/filesystem/io/warp.h"
 
 
 static LINKERFS_MOUNT_CONFIG mount_config;

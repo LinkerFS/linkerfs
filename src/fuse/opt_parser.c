@@ -1,6 +1,6 @@
 /*
  * LinkerFS: a data remapping filesystem
- * Copyright (C) 2024  kaedeair <kaedeair@outlook.com>
+ * Copyright (C) 2024-2025  kaedeair <kaedeair@outlook.com>
  *
  * This file is part of LinkerFS.
  *
@@ -22,7 +22,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "opt_parser.h"
+#include "linkerfs/filesystem/fuse/opt_parser.h"
 
 int check_warp_point_valid(const char *path);
 
