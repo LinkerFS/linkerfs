@@ -6,12 +6,14 @@ find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(FUSE REQUIRED IMPORTED_TARGET fuse)
 set(SOURCES
+        src/fuse/opt_parser.c
         src/linkerfs.c
         src/io/base.c
         src/io/warp.c
         src/fuse/opt_parser.c
 )
 set(HEADERS
+        include/linkerfs/filesystem/data/format_version.h
         include/linkerfs/filesystem/data/mount_config.h
         include/linkerfs/filesystem/data/part_info.h
         include/linkerfs/filesystem/io/base.h
