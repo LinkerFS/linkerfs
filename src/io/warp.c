@@ -81,7 +81,8 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKE
             part_real_path[res + 1] = '\0';
             //size_has_read = size - left_size
             res = fs_read(part_real_path, buf + size - left_size,
-                          left_size > part->data_size ? part->data_size : left_size,
+                          left_size > part->data_size - part_read_offset
+                          ? part->data_size - part_read_offset : left_size,
                           part->data_begin_offset + part_read_offset);
             //only first part need add part_read_offset
             part_read_offset = 0;
@@ -91,10 +92,9 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKE
             ++part;
             ++i;
         }
-    } else
+    } else {
         return 0;
-    if (left_size > 0)
-        res = size - left_size;
+    }
 
-    return res;
+    return (ssize_t) (size - left_size);
 }
