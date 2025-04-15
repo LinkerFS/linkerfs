@@ -28,7 +28,7 @@
 /*
  *  magic_number: hex "0xD1 0xFE LinkerFS 0xB7 0xE3"
  */
-static const unsigned char magic_number[12] = {0xD1, 0xFE, 0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x72, 0x46, 0x53, 0xB7, 0xE3};
+static const uint8_t magic_number[12] = {0xD1, 0xFE, 0x4C, 0x69, 0x6E, 0x6B, 0x65, 0x72, 0x46, 0x53, 0xB7, 0xE3};
 
 typedef struct file_format_version {
     uint8_t major;
@@ -41,9 +41,9 @@ typedef struct header_info {
     int64_t warp_size;
     uint16_t num_parts;
     LINKERFS_WARP_VERSION fmt_version;
-    uint32_t unused;
+    uint8_t reserved[36];
 } LINKERFS_HEADER;
 
-static const unsigned char header_length = sizeof(LINKERFS_HEADER);
+static const int32_t header_length = sizeof(LINKERFS_HEADER);
 
 #endif //LINKERFS_HEADER_INFO_H
