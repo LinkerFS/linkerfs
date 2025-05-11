@@ -22,7 +22,6 @@
 #ifndef LINKERFS_HEADER_INFO_H
 #define LINKERFS_HEADER_INFO_H
 
-
 #include <stdint.h>
 
 /*
@@ -46,4 +45,4 @@ typedef struct header_info {
 
 static const int32_t header_length = sizeof(LINKERFS_HEADER);
 
-#endif //LINKERFS_HEADER_INFO_H
+#endif  //LINKERFS_HEADER_INFO_H

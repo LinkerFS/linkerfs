@@ -24,9 +24,6 @@
 
 #include "header_info.h"
 
-const LINKERFS_WARP_VERSION format_version = {
-        .major=0x0,
-        .minor=0x0
-};
+const LINKERFS_WARP_VERSION format_version = {.major = 0x0, .minor = 0x0};
 
-#endif //LINKERFS_FORMAT_VERSION_H
+#endif  //LINKERFS_FORMAT_VERSION_H

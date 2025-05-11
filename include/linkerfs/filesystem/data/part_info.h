@@ -27,11 +27,11 @@
 typedef struct part_info {
     int64_t data_size;
     int64_t data_begin_offset;  //data begin offset in destination file
-    int32_t path_offset;    //offset in this warp configuration file
+    int32_t path_offset;  //offset in this warp configuration file
     uint16_t path_length;
     uint8_t reserved[10];
 } LINKERFS_PART;
 
 static const unsigned char part_info_length = sizeof(LINKERFS_PART);
 
-#endif //LINKERFS_PART_INFO_H
+#endif  //LINKERFS_PART_INFO_H

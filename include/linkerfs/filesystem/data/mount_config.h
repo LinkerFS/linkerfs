@@ -21,7 +21,9 @@
 
 #ifndef LINKERFS_MOUNT_CONFIG_H
 #define LINKERFS_MOUNT_CONFIG_H
+
 typedef struct linkerfs_mount_config {
     const char *warp_point;
 } LINKERFS_MOUNT_CONFIG;
-#endif //LINKERFS_MOUNT_CONFIG_H
+
+#endif  //LINKERFS_MOUNT_CONFIG_H

@@ -25,5 +25,3 @@ include_directories(src)
 include_directories(include)
 add_executable(linkerfs ${HEADERS} ${SOURCES} ${FUSE_INCLUDE_DIRS})
 target_link_libraries(linkerfs PRIVATE PkgConfig::FUSE ${Threads})
-
-

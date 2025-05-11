@@ -23,8 +23,9 @@
 #define LINKERFS_OPT_PARSER_H
 
 #include <fuse_opt.h>
+
 #include "linkerfs/filesystem/data/mount_config.h"
 
 void opt_parse(struct fuse_args *args, LINKERFS_MOUNT_CONFIG *mount_config);
 
-#endif //LINKERFS_OPT_PARSER_H
+#endif  //LINKERFS_OPT_PARSER_H

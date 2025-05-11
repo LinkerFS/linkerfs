@@ -23,10 +23,11 @@
 #define LINKERFS_WARP_H
 
 #include <unistd.h>
+
 #include "linkerfs/filesystem/data/header_info.h"
 
 int is_warp_file(const char *path, LINKERFS_HEADER *header);
 
 ssize_t warp_read(int warp_fd, void *buf, size_t size, off_t offset, LINKERFS_HEADER *header);
 
-#endif //LINKERFS_WARP_H
+#endif  //LINKERFS_WARP_H

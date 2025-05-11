@@ -19,10 +19,11 @@
  * along with LinkerFS. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "linkerfs/filesystem/fuse/opt_parser.h"
+
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int check_warp_point_valid(const char *path);
 
@@ -33,30 +34,23 @@ enum opt_type {
 };
 
 
-const struct fuse_opt opts[] = {
-        FUSE_OPT_KEY("-h", LINKERFS_OPT_HELP),
-        FUSE_OPT_KEY("--help", LINKERFS_OPT_HELP),
-        FUSE_OPT_END
-};
-
+const struct fuse_opt opts[] = {FUSE_OPT_KEY("-h", LINKERFS_OPT_HELP), FUSE_OPT_KEY("--help", LINKERFS_OPT_HELP),
+                                FUSE_OPT_END};
 
 void opt_parse(struct fuse_args *args, LINKERFS_MOUNT_CONFIG *mount_config) {
 
     fuse_opt_parse(args, mount_config, opts, opt_processing);
-
 }
 
-void usage(){
-    fprintf(stderr,
-            "usage: linkerfs wrappoint mountpoint [options]\n\n"
-            "general options:\n"
-            "    -o opt,[opt...]        mount options\n"
-            "    -h   --help            print help\n"
-            "\n");
+void usage() {
+    fprintf(stderr, "usage: linkerfs wrappoint mountpoint [options]\n\n"
+                    "general options:\n"
+                    "    -o opt,[opt...]        mount options\n"
+                    "    -h   --help            print help\n"
+                    "\n");
 }
 
-static int
-opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs) {
+static int opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs) {
     (void) outargs;
 
     LINKERFS_MOUNT_CONFIG *mount_config = (LINKERFS_MOUNT_CONFIG *) data;
@@ -72,8 +66,6 @@ opt_processing(void *data, const char *arg, int key, struct fuse_args *outargs) 
             exit(0);
         default:
             break;
-
     }
     return 1;
 }
-

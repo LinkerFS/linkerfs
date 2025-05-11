@@ -21,13 +21,12 @@
 
 #include "linkerfs/filesystem/io/base.h"
 
+#include <dirent.h>
 #include <errno.h>
-#include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <dirent.h>
-
+#include <unistd.h>
 
 ssize_t fs_read(const char *path, void *buf, size_t size, off_t offset) {
     if (offset < 0) {

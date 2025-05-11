@@ -19,13 +19,13 @@
  * along with LinkerFS. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <memory.h>
-#include <errno.h>
-
 #include "linkerfs/filesystem/io/warp.h"
-#include "linkerfs/filesystem/io/base.h"
-#include "linkerfs/filesystem/data/part_info.h"
 
+#include <errno.h>
+#include <memory.h>
+
+#include "linkerfs/filesystem/data/part_info.h"
+#include "linkerfs/filesystem/io/base.h"
 
 int is_warp_file(const char *path, LINKERFS_HEADER *header) {
     int res;
@@ -38,7 +38,6 @@ int is_warp_file(const char *path, LINKERFS_HEADER *header) {
 
     return res;
 }
-
 
 ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKERFS_HEADER *header) {
 
@@ -61,7 +60,7 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKE
 
     if (offset < header->warp_size) {
         int i = 0;
-        // find first data which part in
+        //find first data which part in
         while (i < header->num_parts) {
             part = (LINKERFS_PART *) part_info_buf + i;
             part_read_offset += part->data_size;
@@ -81,8 +80,8 @@ ssize_t warp_read(const int warp_fd, void *buf, size_t size, off_t offset, LINKE
             part_real_path[res + 1] = '\0';
             //size_has_read = size - left_size
             res = fs_read(part_real_path, buf + size - left_size,
-                          left_size > part->data_size - part_read_offset
-                          ? part->data_size - part_read_offset : left_size,
+                          left_size > part->data_size - part_read_offset ? part->data_size - part_read_offset
+                                                                         : left_size,
                           part->data_begin_offset + part_read_offset);
             //only first part need add part_read_offset
             part_read_offset = 0;

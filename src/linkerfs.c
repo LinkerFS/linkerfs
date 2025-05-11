@@ -21,13 +21,14 @@
 
 #define FUSE_USE_VERSION 29
 
-#include <fuse.h>
 #include <errno.h>
-#include <stdlib.h>
+#include <fuse.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "linkerfs/filesystem/fuse/opt_parser.h"
+
 #include "linkerfs/filesystem/data/mount_config.h"
+#include "linkerfs/filesystem/fuse/opt_parser.h"
 #include "linkerfs/filesystem/io/base.h"
 #include "linkerfs/filesystem/io/warp.h"
 
@@ -53,8 +54,8 @@ static int linkerfs_getattr(const char *path, struct stat *stbuf) {
     return res;
 }
 
-static int linkerfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
-                            off_t offset, struct fuse_file_info *fi) {
+static int linkerfs_readdir(const char *path, void *buf, fuse_fill_dir_t filler, off_t offset,
+                            struct fuse_file_info *fi) {
     (void) offset;
     (void) fi;
     int res;
@@ -70,8 +71,7 @@ static int linkerfs_open(const char *path, struct fuse_file_info *fi) {
     return 0;
 }
 
-static int linkerfs_read(const char *path, char *buf, size_t size, off_t offset,
-                         struct fuse_file_info *fi) {
+static int linkerfs_read(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fi) {
     ssize_t res;
     LINKERFS_HEADER header;
     memset(&header, 0, header_length);
@@ -104,14 +104,11 @@ int check_warp_point_valid(const char *path) {
 }
 
 
-static const struct fuse_operations linkerfs_operations = {
-        .getattr = linkerfs_getattr,
-        .readdir = linkerfs_readdir,
-        .open    = linkerfs_open,
-        .read    = linkerfs_read,
-        .release = linkerfs_release
-};
-
+static const struct fuse_operations linkerfs_operations = {.getattr = linkerfs_getattr,
+                                                           .readdir = linkerfs_readdir,
+                                                           .open = linkerfs_open,
+                                                           .read = linkerfs_read,
+                                                           .release = linkerfs_release};
 
 int main(int argc, char *argv[]) {
 
